@@ -1,4 +1,4 @@
-from brena.rendering import render_all_invoices
+from brena.cli import cli
 
 if __name__ == "__main__":
-    render_all_invoices()
+    cli()

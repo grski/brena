@@ -17,7 +17,7 @@ def render_html_to_pdf(context: dict, template: str = "invoice.html"):
     return invoice_name
 
 
-def render_invoice(invoice):
+def render_single_invoice(invoice):
     buyer = COMPANIES[invoice["company"]]
     context = {
         "seller": SELLER,
@@ -29,7 +29,6 @@ def render_invoice(invoice):
     return render_html_to_pdf(context=context)
 
 
-def render_all_invoices():
-    invoices = config["invoices"]
-    rendered_invoices = tuple(render_invoice(invoice) for invoice in invoices)
+def render_invoices(invoices: dict[str, dict]) -> tuple[str, ...]:
+    rendered_invoices = tuple(render_single_invoice(invoice) for _, invoice in invoices.items())
     return rendered_invoices

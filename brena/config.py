@@ -10,6 +10,7 @@ TEMPLATE_DIR: str = os.path.join(PACKAGE_LOCATION, "invoice_templates")
 
 COMPANIES = config["companies"]
 SELLER = COMPANIES["default"]
+INVOICES = {invoice["code"]: invoice for invoice in config["invoices"]}
 
 # TODO: think if you should change the keys to slugs and move "pl" to the dict
 I18N: dict = {
