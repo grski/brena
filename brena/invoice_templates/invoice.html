@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ "Faktura nr" | i18n }} {{ invoice.code }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: white;
+        font-family: 'Inter', sans-serif;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+      a:hover {
+        color: black;
+        text-decoration: underline;
+      }
+      .container {
+        width: 650px;
+        margin: 0 auto;
+      }
+      .header {
+        background-color: white;
+        padding: 1rem 0;
+      }
+      .header__logo {
+        color: #1F5DEA;
+        width: 49%;
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+      }
+      .header__logo-image {
+        width: 300px;
+      }
+      .header__info {
+        width: 50%;
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+        text-align: right;
+        font-size: 9px;
+      }
+      .header__info-title {
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .address {
+        margin: 2rem 0 3rem;
+        font-size: 9px;
+      }
+      .address__text {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+      }
+      .address__text-company {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        font-weight: 700;
+      }
+      .address__right {
+        display: inline-block;
+        width: 51%;
+        text-align: right;
+      }
+      .address__left {
+        display: inline-block;
+        width: 48%;
+      }
+      .invoice__table {
+        border-spacing: 0;
+        width: 100%;
+      }
+      .invoice__table-header {
+        font-size: 9px;
+        text-align: left;
+        background-color: #F3F3F2;
+      }
+      .invoice__table-title {
+        font-weight: 700;
+        padding: 10px;
+      }
+      .invoice__table-body {
+        font-size: 8px;
+      }
+      .invoice__table-summary {
+        padding: 6px 12px;
+      }
+      .invoice__table-item-content {
+        border-bottom: 1px solid #D8D8D8;
+        padding: 12px;
+      }
+      .invoice__table-total {
+        font-weight: 700;
+      }
+      .invoice__table-total-text {
+        border-top: 1px solid #D8D8D8;
+        padding: 12px;
+      }
+      .invoice__bold {
+        font-weight: 700;
+      }
+      .billing {
+        font-size: 9px;
+        margin-top: 3rem;
+        line-height: 0.25rem;
+      }
+      .billing__header {
+        margin-bottom: 1rem;
+      }
+      .billing__header-title {
+        margin: 0;
+      }
+      .divider {
+        margin: 2.5rem auto 2rem;
+      }
+      .footer {
+        font-size: 9px;
+        padding: 0 0 3rem;
+        line-height: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header__logo">
+        </div>
+        <div class="header__info">
+          <h1 class="header__info-title">{{ "Faktura nr" | i18n }} {{ invoice.code }}</h1>
+          <p>{{ "Data wystawienia" | i18n }}: {{ invoice.dates.issued }}</p>
+          <p>{{ "Data sprzedaży" | i18n }}: {{ invoice.dates.sold }}</p>
+          <p>{{ "Termin płatności" | i18n }}: {{ invoice.dates.due_to }}</p>
+          <p>{{ "Metoda płatności" | i18n }}: {{ "Przelew" | i18n }}</p>
+        </div>
+      </div>
+    </header>
+    <section class="address">
+      <div class="container">
+        <article class="address__left">
+          <h3>{{ "Sprzedawca" | i18n }}</h3>
+          <p class="address__text-company">{{ seller.name }}</p>
+          <p class="address__text">{{ seller.address_line_1 }}</p>
+          <p class="address__text">{{ seller.address_line_2 }}</p>
+          <p class="address__text">NIP: {{ seller.nip }}</p>
+          <p class="address__text">IBAN {{ invoice.currency }}: {{ seller.bank_accounts[invoice.currency] }}</p>
+        </article>
+        <article class="address__right">
+          <h3>{{ "Nabywca" | i18n }}</h3>
+          <p class="address__text-company">{{ buyer.name }}</p>
+          <p class="address__text">{{ buyer.address_line_1 }}</p>
+          <p class="address__text">{{ buyer.address_line_2 }}</p>
+          <p class="address__text">NIP: {{ buyer.nip }}</p>
+          <p class="address__text">----</p>
+        </article>
+      </div>
+    </section>
+    <section class="invoice">
+      <div class="container">
+        <table class="invoice__table">
+          <thead class="invoice__table-header">
+            <tr>
+              <th class="invoice__table-title">{{ "Lp." | i18n }}</th>
+              <th class="invoice__table-title">{{ "Nazwa" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Stawka VAT" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Ilość" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Cena jedn. netto" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Wartość netto" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Wartość VAT" | i18n }}</th>
+              <th class="invoice__table-title">{{ "Wartość brutto" | i18n }}</th>
+            </tr>
+          </thead>
+          <tbody class="invoice__table-body">
+          <!--  TODO: add automatic numbering of positions -->
+          {% for position in invoice.positions %}
+            <tr class="invoice__table-item">
+              <td class="invoice__table-item-content">1.</td>
+              <td class="invoice__table-item-content">{{ position.name }}</td>
+              <td class="invoice__table-item-content">{{ position.vat_stake }}%</td>
+              <td class="invoice__table-item-content">{{ position.quantity }}</td>
+              <td class="invoice__table-item-content">{{ position.amount | currency }}</td>
+              <td class="invoice__table-item-content">{{ position.net | currency }}</td>
+              <td class="invoice__table-item-content">{{ position.vat | currency }}</td>
+              <td class="invoice__table-item-content">{{ position.gross | currency }}</td>
+            </tr>
+          {% endfor %}
+            <tr class="invoice__table-total">
+              <td class="invoice__table-total-text" colspan="4"></td>
+              <td class="invoice__table-total-text">{{ "Razem" | i18n }}</td>
+              <td class="invoice__table-total-text">{{ invoice.total.net | currency }} {{ invoice.currency }}</td>
+              <td class="invoice__table-total-text">{{ invoice.total.vat | currency }} {{ invoice.currency }}</td>
+              <td class="invoice__table-total-text">{{ invoice.total.gross | currency }} {{ invoice.currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="billing">
+      <div class="container">
+        <p>{{ "Łącznie do zapłaty" | i18n }}: {{ invoice.total.gross | currency }} {{ invoice.currency }}</p>
+      </div>
+    </section>
+    <div class="divider container">
+    </div>
+  </body>
+</html>
