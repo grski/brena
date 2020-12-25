@@ -83,13 +83,6 @@ Brena expects this file to be found in current working directory.
 ```
 For now I only support toml, maybe yaml in the future. Why toml over yaml? No reason, just my preference in this case.
 
-## Dependencies
-
-[jinja2]()
-toml 
-WeasyPrint 
-typer
-
 # Technology
 This bases on
 [toml](https://github.com/uiri/toml), [weasyprint](https://github.com/Kozea/WeasyPrint/) and [jinja2](https://github.com/pallets/jinja).
