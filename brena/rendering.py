@@ -2,7 +2,7 @@ from jinja2 import Template
 from weasyprint import HTML
 
 from brena.calculation import calculate_positions
-from brena.config import COMPANIES, SELLER, config
+from brena.config import COMPANIES, SELLER
 from brena.i18n import get_secondary_language
 from brena.jinja.utils import jinja_environment
 
