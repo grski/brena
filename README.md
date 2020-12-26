@@ -107,7 +107,25 @@ To start developing you need to install poetry
 `pip install poetry` and then just `poetry install`. 
 
 ## Docker 
-TODO
+This application is fully dockerized. If you do not wish to download all the deps and install it, you can use the docker image provided.
+[Brena docker image](https://hub.docker.com/r/grski/brena)
+
+If you have readlink and are on Linux, then, assuming `brena.toml` is in current working dir, just go with:
+```bash
+docker run -v `readlink -f .`:/app/ grski/brena
+```
+otherwise:
+
+```bash
+docker run -v /home/grski/directorywherebrenatomlis/:/app/ grski/brena
+```
+
+or if you want to customize the command a bit and maybe generate only selected invoices with given codes:
+```bash
+docker run -v /home/grski/directorywherebrenatomlis/:/app/ grski/brena sh -c "python -m brena somecode1 somecode2"
+```
+
+TODO: describe precedence language
 
 ## Known make commands
 ```bash
