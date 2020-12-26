@@ -9,6 +9,7 @@ previous_business_day: datetime = today - shift
 
 def money_formatter(value, places=2, curr="", sep=" ", dp=",", pos="", neg="-", trailneg=""):
     """Convert Decimal to a money formatted string.
+    Source: Python docs
 
     places:  required number of places after the decimal point
     curr:    optional currency symbol before the sign (may be blank)
