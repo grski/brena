@@ -1,11 +1,11 @@
-from jinja2 import contextfilter
+from jinja2 import pass_context
 
 from brena.currency import money_formatter
 from brena.i18n import get_translation
 
 
 # IMPORTANT: every registered filter must start with the phrase 'jinja_'
-@contextfilter
+@pass_context
 def jinja_currency(context: dict, value: str, *args) -> str:
     """
     Formats to a currency standard. TODO: add getting currency from context and stuff
@@ -13,7 +13,7 @@ def jinja_currency(context: dict, value: str, *args) -> str:
     return money_formatter(value)
 
 
-@contextfilter
+@pass_context
 def jinja_i18n(context: dict, value: str, *args):
     if context["secondary_language"] == context["primary_language"]:
         return value

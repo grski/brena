@@ -10,6 +10,11 @@ To install it type:
 pip install brena
 ```
 and you are done. Brena depends on [weasyprint](https://github.com/Kozea/WeasyPrint/), so you might be required to install additional requirements. Look at [weasyprint docs](https://weasyprint.readthedocs.io/en/stable/).
+You probably may need to run (ubuntu)
+```bash
+sudo apt install libpango-1.0-0 libpangoft2-1.0-0
+```
+just to be sure check out the page linked above.
 If you don't want to do that - check out the docker option.
 
 ## Usage
@@ -27,6 +32,78 @@ You can read a bit more about available commands after typing
 ```bash
 brena --help
 ```
+## Usage
+First of all you need to initialise the application by running 
+```bash
+brena init
+```
+This will create your local database and prompt you to enter your company's details.
+You will be prompted to answer the following questions:
+```
+brena init
+------
+Enter the company name: The Engineers Ltd
+Enter first address line: Magic Street 4/10
+Enter second address line: 01-100 Warsaw
+Enter tax identification number: PL9831234008
+Enter default language: pl
+Enter the bank account number: PL42 1111 0000 2222 0000 2222 0000
+Would you like to add another bank account? (yes/no): yes
+Enter your bank account: PL41 1111 0000 2222 0000 2222 0000
+Would you like to add another bank account? (yes/no): no
+Default company information saved, thank you.
+```
+This will set up the database and save your company's information. All the records are stored locally.
+No information leaves your machine.
+
+Now you might want to add some clients to be able to create an invoice. You can do that with
+```bash
+brena client add
+```
+Which will prompt:
+```
+brena client add
+------
+Enter the slug that will identify the client: some-corp
+Enter the company name: Some Corp sp. z o. o.
+Enter first address line: Magic Street 4/10
+Enter second address line: 01-100 Warsaw
+Enter tax identification number: PL9831234008
+Enter default language: pl
+Enter the bank account number: PL42 1111 0000 2222 0000 2222 0000
+Would you like to add another bank account? (yes/no): yes
+Enter your bank account: PL41 1111 0000 2222 0000 2222 0000
+Would you like to add another bank account? (yes/no): no
+```
+
+Now you are all set up. You can add an invoice with:
+```bash
+brena invoice add
+```
+Which will result in you getting prompted:
+
+```
+brena invoice add
+----
+Seller slug (leave empty to use default):
+Buyer slug: some-corp
+Language - currently supported are [pl, en] (leave empty to use default): en
+Code: A1/10/2022
+Issue date: 2022-10-10
+Sold date: 2022-10-10
+Due to date (leave empty to not include): 2022-10-30
+Currency: PLN
+Invoice position name: Software development
+Quantity: 10
+Amount: 150
+Vat stake: 23
+--
+Added entry. To stop adding entries hit ctrl-c
+(...)
+Entry added to db.
+```
+Now you can generate all the invoices with `brena generate` or a list of invoices with `brena generate code1 code2`
+
 
 ## Config: brena.toml
 Below you can see an example of the required `brena.toml` file.

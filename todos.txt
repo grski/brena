@@ -1,0 +1,11 @@
+# TODO: add statistics generation?
+# TODO: move to Invoice/Company/Position classes
+# TODO: customizable seller
+# TODO: more than 1 position
+# TODO: add email gathering and maybe later automatic sending?
+# TODO: handle multiple bank accounts
+# TODO: add validation to check if it's in supported langs
+# TODO: think if you should change the keys to slugs and move "pl" to the dict in i18n
+# TODO: handle failing gracefully in i18n get_translation?
+# Todo: add proper directory creation in render_html_to_pdf
+

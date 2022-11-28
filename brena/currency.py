@@ -8,11 +8,11 @@ previous_business_day: datetime = today - shift
 
 
 def money_formatter(value, places=2, curr="", sep=" ", dp=",", pos="", neg="-", trailneg=""):
-    """Convert Decimal to a money formatted string.
+    """Convert Decimal to money formatted string.
     Source: Python docs
 
     places:  required number of places after the decimal point
-    curr:    optional currency symbol before the sign (may be blank)
+    curr:    optional currency symbol before the sign (maywbe blank)
     sep:     optional grouping separator (comma, period, space, or blank)
     dp:      decimal point indicator (comma or period)
              only specify as blank when places is zero

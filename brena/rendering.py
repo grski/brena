@@ -12,13 +12,13 @@ def render_html_to_pdf(context: dict, template: str = "invoice.html"):
     invoice = context["invoice"]
     html_template = template.render(context)
     invoice_name = f"{''.join(char for char in invoice['code'] if char.isalnum())}.pdf"
-    # Todo: add proper directory creation
     HTML(string=html_template).write_pdf(invoice_name)
     return invoice_name
 
 
 def render_single_invoice(invoice):
-    buyer = COMPANIES[invoice["company"]]
+    buyer: dict = COMPANIES[invoice["buyer"]]
+    seller: dict = invoice.get("seller", )
     context = {
         "seller": SELLER,
         "buyer": buyer,
